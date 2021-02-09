@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" manifest="">
+	<!--
+	    @author Тигровый Ястреб
+	    @version 1.0
+	 -->
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<meta name="description" content="">
+		<meta name="keywords" content="html5, game, canvas, web">
+		<meta name="author" content="Тигровый Ястреб">
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="viewport" content="width = 450">
+		<meta property="og:image" content="#" />
+
+        <title>Qiva - избегайте красныйх точек!</title>
+
+		<script type="text/javascript">
+			if( navigator.userAgent.match( /iphone|ipad|ipod/gi ) ) window.location = '/mobile';
+
+			var sc = 5667;
+
+			var FACEBOOK_MODE = false;
+		</script>
+
+		<link type="text/css" href="css/reset.css" rel="stylesheet" media="screen" />
+		<link type="text/css" href="css/main.css" rel="stylesheet" media="screen" />
+    </head>
+    <body>
+
+    	<header>
+    		<h1>Qiva</h1>
+    		<span class="header-instruction">Развернуть по инструкции &amp; настройки.</span>
+
+    		<!-- Дополнительный контент, который можно расширить -->
+    		<div class="extra">
+
+    			<!-- Об игре в целом -->
+    			<section id="about">
+    				<h3>Инфо</h3>
+	    			<p>Игра с единственной целью: избежать столкновения с красными точками.<br/>Вы можете активировать бустеры, собирая редкие точки.</p>
+	    			<p>Звучит просто, а? Если бы... Дайте ему попробовать!</p>
+	    			<p class="credits">
+	    				Разработчик: <a href="#">Тигровый Ястреб</a><br/>
+	    				Discord: <a href="#">Тигровый Ястреб#7062</a>
+    				</p>
+	    		</section>
+
+
+    			<!-- Легенда -->
+    			<section id="legend">
+    				<h3>Легендарные точки</h3>
+	    			<ul>
+	    				<li class="shield"><span>S</span> - Щит</li>
+	    				<li class="gravity-field"><span>G</span> - Гравитационное поле</li>
+	    				<li class="time-warp"><span>T</span> - Искривление времени</li>
+	    				<li class="minimize-dots"><span>M</span> - Минимизация точек</li>
+	    			</ul>
+	    			<ul>
+	    				<li class="life-up"><span>1</span> - Жизнь</li>
+	    				<li class="player"><span></span> - Игрок</li>
+	    				<li class="enemy"><span></span> - Враг</li>
+	    			</ul>
+	    		</section>
+
+	    		<!-- Игровой процесс и окружающие настройки -->
+	    		<section id="settings">
+	    			<h3>Настройки</h3>
+	    			<ul>
+	    				<li><a id="mute-button" href="index.html#"></a></li>
+	    				<li><a id="reset-button" href="index.html#">Сбросить игру</a></li>
+	    			</ul>
+	    		</section>
+
+    		</div>
+    	</header>
+
+    	<!-- Обертывает все игровые элементы, включая панели пользовательского интерфейса и холст, на котором визуализируется игра -->
+    	<div id="game">
+
+	    	<!-- Отображает информацию о состоянии (счет, время, fps) текущей игры -->
+	    	<div id="game-status" class="ui"></div>
+
+	    	<!-- Содержит основной игровой интерфейс, такой как списки рекордов и инструкции -->
+			<div id="game-panels">
+				<div id="message" class="ui">
+					<h2 id="title">Инструкции</h2>
+					<ul class="instructions">
+						<li>1) Избегайте красных точек.</li>
+						<li>2) Собирайте редкие точки.</li>
+						<li>3) Набирайте дополнительные очки, много перемещаясь.</li>
+						<li>4) Остаться в живых.</li>
+					</ul>
+					<a href="index.html#" id="start-button">Начать</a>
+					<div id="level-selector">
+						<span>Уровень:</span>
+						<ul class="levels"></ul>
+					</div>
+				</div>
+				<div id="highscore-list" class="ui">
+					<h2>Высокий балл</h2>
+					<ul id="highscore-output"></ul>
+				</div>
+				<div id="highscore-win" class="ui">
+					<h2 id="highscore-place"></h2>
+					<p>Что-то, почему вас можно опознать</p>
+					<input id="highscore-input" type="text" name="alias" maxlength="10" />
+					<a id="highscore-submit" href="index.html#">Го</a>
+				</div>
+			</div>
+
+			<canvas id="world"></canvas>
+
+		</div>
+
+		<footer>
+			<a href="https://qiwi.com/n/HAWK111">Поддержать проект <em></em></a> |
+			<a href="#">Все права <em>в</em> космосе!</a>
+		</footer>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+		<script>!window.jQuery && document.write(unescape('%3Cscript src="../js/libs/jquery-1.5.2.min.js"%3E%3C/script%3E'))</script>
+
+		<script type="text/javascript" src="js/swfobject.js"></script>
+		<script type="text/javascript" src="js/sinuous.min.js"></script>
+
+		<script type="text/javascript">
+
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-19474037-1']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+
+		</script>
+    </body>
+</html>
+
+
